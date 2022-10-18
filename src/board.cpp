@@ -35,7 +35,7 @@ namespace titato
     int Board::GetWidth() { return _width; }
     int Board::GetHeight() { return _height; }
     int Board::GetOnTurn() { return _onTurn; }
-    int Board::Win() { return _win; }
+    int Board::GetWin() { return _win; }
     int Board::Get(int x, int y) { return _At(x, y); }
 
     int Board::Place(int x, int y)
@@ -69,11 +69,9 @@ namespace titato
                     win = 0;
                     continue;
                 }
-                if (
-                    _CheckR(x, y, _At(x, y), _winLength) ||
+                if (_CheckR(x, y, _At(x, y), _winLength) ||
                     _CheckRD(x, y, _At(x, y), _winLength) ||
-                    _CheckD(x, y, _At(x, y), _winLength)
-                )
+                    _CheckD(x, y, _At(x, y), _winLength))
                     return _win = _At(x, y);
             }
         }

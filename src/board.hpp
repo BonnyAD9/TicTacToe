@@ -11,7 +11,7 @@ namespace titato
         int GetWidth();
         int GetHeight();
         int GetOnTurn();
-        int Win();
+        int GetWin();
         int Place(int x, int y);
         int Get(int x, int y);
     private:
