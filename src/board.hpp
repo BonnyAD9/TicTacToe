@@ -27,6 +27,7 @@ namespace titato
         bool _CheckR(int x, int y, int player, int count);
         bool _CheckRD(int x, int y, int player, int count);
         bool _CheckD(int x, int y, int player, int count);
+        bool _CheckRU(int x, int y, int player, int count);
         std::vector<std::vector<int>> _board;
     };
 } // namespace titato

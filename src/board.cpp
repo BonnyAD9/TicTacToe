@@ -71,7 +71,8 @@ namespace titato
                 }
                 if (_CheckR(x, y, _At(x, y), _winLength) ||
                     _CheckRD(x, y, _At(x, y), _winLength) ||
-                    _CheckD(x, y, _At(x, y), _winLength))
+                    _CheckD(x, y, _At(x, y), _winLength) ||
+                    _CheckRU(x, y, _At(x, y), _winLength))
                     return _win = _At(x, y);
             }
         }
@@ -103,5 +104,14 @@ namespace titato
         if (y >= _height || _At(x, y) != player)
             return false;
         return _CheckD(x, y + 1, player, count - 1);
+    }
+
+    bool Board::_CheckRU(int x, int y, int player, int count)
+    {
+        if (count == 0)
+            return true;
+        if (x >= _width || y < 0 || _At(x, y) != player)
+            return false;
+        return _CheckRU(x + 1, y - 1, player, count - 1);
     }
 } // namespace titato
