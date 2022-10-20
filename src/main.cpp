@@ -72,7 +72,9 @@ int main(int argc, char **argv)
         return Error("Invalid argument '" + arg + "'");
     }
 
+    std::cout << "\x1b[?1049h";
     Game(width, height, playerCount, winLength);
+    std::cout << "\x1b[?1049l";
 }
 
 void Game(int width, int height, int playerCount, int winLength)
