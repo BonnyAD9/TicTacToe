@@ -74,7 +74,6 @@ int main(int argc, char **argv)
 
     std::cout << "\x1b[?1049h";
     Game(width, height, playerCount, winLength);
-    std::cout << "\x1b[?1049l";
 }
 
 void Game(int width, int height, int playerCount, int winLength)
@@ -116,6 +115,8 @@ void Game(int width, int height, int playerCount, int winLength)
     WriteBoard(b);
     WriteTile(b.GetWin());
     std::cout << " wins!" << std::endl;
+    std::cin.get();
+    std::cin.get();
 }
 
 void WriteBoard(Board &b)
