@@ -9,11 +9,8 @@ namespace titato
         _win(false),
         _playerCount(2),
         _winLength(3),
-        _board(_width)
-    {
-        for (auto &l : _board)
-            l = std::vector<int>(_height);
-    }
+        _board(_width * _height, 0)
+    { }
 
     Board::Board(
         int width,
@@ -26,11 +23,8 @@ namespace titato
         _win(false),
         _playerCount(playerCount),
         _winLength(winLength),
-        _board(_width)
-    {
-        for (auto &l : _board)
-            l = std::vector<int>(_height);
-    }
+        _board(_width * _height, 0)
+    { }
 
     int Board::GetWidth() { return _width; }
     int Board::GetHeight() { return _height; }
@@ -49,7 +43,7 @@ namespace titato
 
     int &Board::_At(int x, int y)
     {
-        return _board[x][y];
+        return _board[_width * y + x];
     }
 
     int Board::_NextTurn()
@@ -69,49 +63,22 @@ namespace titato
                     win = 0;
                     continue;
                 }
-                if (_CheckR(x, y, _At(x, y), _winLength) ||
-                    _CheckRD(x, y, _At(x, y), _winLength) ||
-                    _CheckD(x, y, _At(x, y), _winLength) ||
-                    _CheckRU(x, y, _At(x, y), _winLength))
+                if (_Check(x, y,  1, 0, _At(x, y), _winLength) ||
+                    _Check(x, y,  0, 1, _At(x, y), _winLength) ||
+                    _Check(x, y,  1, 1, _At(x, y), _winLength) ||
+                    _Check(x, y, -1, 1, _At(x, y), _winLength))
                     return _win = _At(x, y);
             }
         }
         return _win = win;
     }
 
-    bool Board::_CheckR(int x, int y, int player, int count)
+    bool Board::_Check(int x, int y, int xc, int yc, int player, int count)
     {
         if (count == 0)
             return true;
-        if (x >= _width || _At(x, y) != player)
+        if (x < 0 || x >= _width || y >= _width || _At(x, y) != player)
             return false;
-        return _CheckR(x + 1, y, player, count - 1);
-    }
-
-    bool Board::_CheckRD(int x, int y, int player, int count)
-    {
-        if (count == 0)
-            return true;
-        if (x >= _width || y >= _height || _At(x, y) != player)
-            return false;
-        return _CheckRD(x + 1, y + 1, player, count - 1);
-    }
-
-    bool Board::_CheckD(int x, int y, int player, int count)
-    {
-        if (count == 0)
-            return true;
-        if (y >= _height || _At(x, y) != player)
-            return false;
-        return _CheckD(x, y + 1, player, count - 1);
-    }
-
-    bool Board::_CheckRU(int x, int y, int player, int count)
-    {
-        if (count == 0)
-            return true;
-        if (x >= _width || y < 0 || _At(x, y) != player)
-            return false;
-        return _CheckRU(x + 1, y - 1, player, count - 1);
+        return _Check(x + xc, y + yc, xc, yc, player, count - 1);
     }
 } // namespace titato
